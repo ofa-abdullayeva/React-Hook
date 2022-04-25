@@ -1,4 +1,5 @@
-import { Component, useState  ,useEffect} from 'react';
+import {  useState  ,useEffect} from 'react';
+import { ReactFragment } from 'react';
 import { Container } from 'react-bootstrap';
 import './App.css';
 // class Slider extends Component {
@@ -73,10 +74,18 @@ const Slider = (props) => {
     //     console.log('1 defe yuklenir')
     //     document.title= `slide: ${slide}`
     // },[])
+    const logging = ()=>{
+        console.log('log')
+    }
 
     useEffect(()=>{
-        console.log('Yalniz slide render olunur')
+        // console.log('Yalniz slide render olunur')
         document.title= `slide: ${slide}`
+        window.addEventListener('click', logging)
+
+        return ()=>{
+            window.removeEventListener('click', logging)  
+        }
     },[slide])
 
     // const changeSlide = (i) => {
@@ -114,10 +123,16 @@ const Slider = (props) => {
 }
 
 
+
+
 function App() {
+    const [slider,setSlider] = useState(true);
+
     return (
-        <Slider />
+     <>
+     <button onClick={()=>{setSlider(false)}}>clickme</button>
+     {slider?<Slider/>:null}
+     </>
     );
 }
-
 export default App;
